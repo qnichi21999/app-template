@@ -3,7 +3,7 @@
 ```
 SECRET_KEY=randomlettersandnumbers123
 ```
-2. To start \n
+2. To start
     Windows:
     ```bash
     docker-compose up --build 
@@ -12,7 +12,7 @@ SECRET_KEY=randomlettersandnumbers123
     ```bash
     docker compose up --build 
     ```
-3. To stop \n
+3. To stop
     Windows:
     ```bash
     docker-compose down -v
