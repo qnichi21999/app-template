@@ -7,7 +7,7 @@ import os
 from typing import Optional, Dict, Any
 from fastapi import Request
 
-EXCHANGE_NAME = "template_exchange"
+EXCHANGE_NAME = os.getenv("EXCHANGE_NAME", "default_exchange")
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -17,7 +17,9 @@ class RabbitMQManager:
         if url is None:
             host = os.getenv("RABBITMQ_HOST", "rabbitmq")
             port = os.getenv("RABBITMQ_PORT", "5672")
-            self.url = f"amqp://guest:guest@{host}:{port}/"
+            user = os.getenv("RABBITMQ_DEFAULT_USER", "guest")
+            password = os.getenv("RABBITMQ_DEFAULT_PASS", "guest")
+            self.url = f"amqp://{user}:{password}@{host}:{port}/"
         else:
             self.url = url
         self.connection: Optional[aio_pika.RobustConnection] = None

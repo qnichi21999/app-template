@@ -14,8 +14,10 @@ logger = logging.getLogger(__name__)
 
 host = os.getenv("RABBITMQ_HOST", "rabbitmq")
 port = os.getenv("RABBITMQ_PORT", "5672")
-RABBITMQ_URL = f"amqp://guest:guest@{host}:{port}/"
-EXCHANGE_NAME = "template_exchange"
+user = os.getenv("RABBITMQ_DEFAULT_USER", "guest")
+password = os.getenv("RABBITMQ_DEFAULT_PASS", "guest")
+RABBITMQ_URL = f"amqp://{user}:{password}@{host}:{port}/"
+EXCHANGE_NAME = os.getenv("EXCHANGE_NAME", "default_exchange")
 
 async def process_register(message: Dict[str, Any]):
     db_gen = get_db()
