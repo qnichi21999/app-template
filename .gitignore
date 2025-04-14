@@ -98,5 +98,6 @@ venv.bak/
 *.db 
 *.sql
 
-consumer/alembic/versions/*
+
 !consumer/alembic/versions/.gitkeep
+consumer/alembic/versions/*
