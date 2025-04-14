@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings
+from pydantic import Extra
 from typing import Optional
 from dotenv import load_dotenv
 
@@ -18,5 +19,6 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         case_sensitive = True
+        extra = Extra.allow
 
 settings = Settings()
