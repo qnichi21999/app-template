@@ -1,8 +1,6 @@
 ## Usage
-1. Create .env file with this content:
-```
-SECRET_KEY=randomlettersandnumbers123
-```
+1. Edit and rename .env.example file to .env
+
 2. To start
     Windows:
     ```bash
