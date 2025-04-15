@@ -28,11 +28,11 @@ class Middleware(BaseHTTPMiddleware):
 
             request.state.token_payload = payload
 
-            response = call_next(request)
+            response = await call_next(request)
             return response
         
         except Exception as e:
-            raise ValidationError
+            raise ValidationError(str(e))
 
 #Routers
 app.include_router(auth_router)
