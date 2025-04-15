@@ -1,14 +1,14 @@
 from pydantic import BaseModel, Field
 from typing import Optional
 
-class RegisterModel(BaseModel):  # Changed to inherit from BaseModel since we don't need id and role from User
+class RegisterModel(BaseModel):
     username: str = Field(..., example="ivanov")
     password: str = Field(..., min_length=4, example="1234")
     role: str = ""
 
-class LoginModel(BaseModel):  # Changed to inherit from BaseModel since we only need email and password
+class LoginModel(BaseModel):
     username: str = Field(..., example="ivanov")
-    password: str = Field(..., min_length=4, example="1234")  # Added validation and example
+    password: str = Field(..., min_length=4, example="1234")
 
 class TokenResponse(BaseModel):
     access_token: str
