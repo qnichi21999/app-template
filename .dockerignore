@@ -4,4 +4,4 @@ venv
 .env
 .venv
 __pycache__
-consumer/alembic/versions/*
+*_make_migrations.py
