@@ -1,16 +1,13 @@
-from fastapi import Depends
+from fastapi import Request, Depends
 from fastapi.security import OAuth2PasswordBearer
 from producer.core.config import settings
-from producer.core.security import verify_token
 from producer.core.exceptions import UnauthorizedError, ForbiddenError
 
-oauth2_scheme = OAuth2PasswordBearer(
-    tokenUrl=settings.OAUTH2_TOKEN_URL,
-    scheme_name=settings.OAUTH2_SCHEME_NAME
-)
+# dev only
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl=settings.OAUTH2_TOKEN_URL) # For Swagger to work
 
-async def get_current_user(token: str = Depends(oauth2_scheme)) -> dict:
-    payload = verify_token(token)
+async def get_current_user(request: Request) -> dict:
+    payload = request.state.token_payload
     
     if payload.get("type") != "access":
         raise UnauthorizedError("Invalid token type")
