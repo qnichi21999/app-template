@@ -7,7 +7,7 @@ from aio_pika import connect, connect_robust, Message, IncomingMessage, Exchange
 from models import User
 from db import get_db
 from crud import create_user, get_user_by_username, get_user_by_id
-
+from core.redis import blacklist_token
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -52,7 +52,15 @@ async def process_login(message: Dict[str, Any]) -> Dict[str, Any]:
             return {"error": "User not found"} 
     finally:
         db.close()
-    
+
+async def process_logout(message: Dict[str, Any]):
+    token = message["data"]["credentials"]
+    try:
+        blacklist_token(token)
+        return {"success": "User logged out successfully"}
+    except Exception as e:
+        return {"error": str(e)}
+
 async def process_message(message: IncomingMessage, exchange: Exchange):
     try:
         async with message.process():
@@ -72,6 +80,9 @@ async def process_message(message: IncomingMessage, exchange: Exchange):
                 case "get_user_by_username":
                     logger.info("Processing login request...")
                     response = await process_login(request_data)
+                case "logout_user":
+                    logger.info("Processing user logout...")
+                    response = await process_logout(request_data)
                 case _:
                     logger.warning(f"Unknown action received: {action}")
                     response = {"error": f"Unknown action: {action}"}
@@ -139,6 +150,7 @@ async def main():
         routing_keys = [
             "user.register",
             "user.login",
+            "user.logout",
         ]
         
         for key in routing_keys:
