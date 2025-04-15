@@ -35,7 +35,7 @@ async def process_register(message: Dict[str, Any]):
         await create_user(db, new_user)
     finally:
         db.close()
-    return {"success": "User registerered successfully"}
+    return {"success": "User registered successfully"}
 
 async def process_login(message: Dict[str, Any]) -> Dict[str, Any]:
     db_gen = get_db()
