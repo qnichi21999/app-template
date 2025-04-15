@@ -4,7 +4,7 @@ from producer.core.config import settings
 from producer.core.exceptions import UnauthorizedError, ForbiddenError
 
 # dev only
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl=settings.OAUTH2_TOKEN_URL) # For Swagger to work
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl=settings.OAUTH2_TOKEN_URL, scheme_name="OAuth2PasswordBearer") # For Swagger to work
 
 async def get_current_user(request: Request) -> dict:
     payload = request.state.token_payload
