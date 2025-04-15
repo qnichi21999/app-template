@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, Depends
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm, HTTPAuthorizationCredentials, HTTPBearer
 import logging
 
 from producer.core.rabbitmq import rabbitmq_manager
@@ -86,3 +86,27 @@ async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends
     except Exception as e:
         logger.error(f"Login error: {str(e)}")
         raise InternalServerError(f"Login error: {str(e)}")
+
+@router.post("/logout")
+async def logout(request: Request, credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer())):
+    try:
+        message = {
+            "action": "logout_user",
+            "data": {
+                "credentials": credentials.credentials
+            }
+        }
+
+        response = await rabbitmq_manager.publish_message(
+            routing_key="user.logout",
+            message=message
+        )
+        
+        if "error" in response:
+            raise InternalServerError(response["error"])
+            
+        return response
+    
+    except Exception as e:
+        logger.error(f"Logout error: {str(e)}")
+        raise InternalServerError(f"Logout error: {str(e)}")
