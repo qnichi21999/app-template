@@ -34,7 +34,7 @@ class RabbitMQManager:
             self.connection = await aio_pika.connect_robust(self.url)
             self.channel = await self.connection.channel()
             
-            # Создаем exchange
+            # exchange creation
             logger.info(f"Declaring exchange {EXCHANGE_NAME}...")
             self.exchange = await self.channel.declare_exchange(
                 EXCHANGE_NAME,
@@ -42,7 +42,7 @@ class RabbitMQManager:
                 durable=True
             )
             
-            # Создаем callback очередь
+            # callback queue creation
             logger.info("Creating callback queue...")
             self.callback_queue = await self.channel.declare_queue(
                 exclusive=True,
@@ -50,10 +50,10 @@ class RabbitMQManager:
                 durable=False
             )
             
-            # Привязываем callback очередь к exchange
+            # Bind callback queue with exchange
             await self.callback_queue.bind(self.exchange, routing_key=self.callback_queue.name)
             
-            # Начинаем слушать callback очередь
+            # Callback queue listening
             await self.callback_queue.consume(self.on_response)
             logger.info("RabbitMQ connection established successfully")
             return self
@@ -110,7 +110,7 @@ class RabbitMQManager:
         )
 
         try:
-            # Увеличиваем таймаут до 60 секунд
+            # Increase timeout to 60 seconds
             response = await asyncio.wait_for(future, timeout=60.0)
             logger.info(f"Received response for correlation_id: {correlation_id}")
             return response
