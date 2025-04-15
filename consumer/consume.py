@@ -35,7 +35,7 @@ async def process_register(message: Dict[str, Any]):
         await create_user(db, new_user)
     finally:
         db.close()
-    return {"success": "Пользователь успешно зарегистрирован"}
+    return {"success": "User registerered successfully"}
 
 async def process_login(message: Dict[str, Any]) -> Dict[str, Any]:
     db_gen = get_db()
@@ -49,7 +49,7 @@ async def process_login(message: Dict[str, Any]) -> Dict[str, Any]:
             return existing_user.as_dict()
         else:
             logger.error(f"User not found: {username}")
-            return {"error": "Пользователь не найден"} 
+            return {"error": "User not found"} 
     finally:
         db.close()
     
@@ -64,7 +64,7 @@ async def process_message(message: IncomingMessage, exchange: Exchange):
             # Log the received action and routing key
             logger.info(f"Processing action: {action} with routing key: {message.routing_key}")
 
-            # обработка запросов
+            # Request processing
             match action:
                 case "register_user":
                     logger.info("Processing register request...")
