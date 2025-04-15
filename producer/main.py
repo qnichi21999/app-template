@@ -44,6 +44,6 @@ async def shutdown():
 
 @app.get("/")
 async def read_root():
-    return {"message": "FastAPI приложение работает и подключено к RabbitMQ"}
+    return {"message": "FastAPI is working and connected to RabbitMQ"}
 
 
