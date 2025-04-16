@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from models import User
+from consumer.core.models import User
 
 async def create_user(db: Session, user: User):
     db.add(user)
