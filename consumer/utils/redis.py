@@ -5,7 +5,7 @@ from datetime import datetime
 
 from jose import jwt
 
-from exceptions import InternalServerError
+from consumer.core.exceptions import InternalServerError
 
 redis_client = redis.Redis(host='redis', port=6379, db=0)
 

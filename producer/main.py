@@ -4,7 +4,7 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from producer.routers.auth import router as auth_router
 from producer.core.rabbitmq import rabbitmq_manager
 from producer.core.exceptions import ValidationError, UnauthorizedError
-from producer.core.security import verify_token
+from producer.utils.security import verify_token
 
 # dev only
 from producer.core.dependencies import oauth2_scheme

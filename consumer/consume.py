@@ -4,10 +4,10 @@ import logging
 import os
 from typing import Dict, Any
 from aio_pika import connect, connect_robust, Message, IncomingMessage, Exchange, ExchangeType
-from models import User
-from db import get_db
-from crud import create_user, get_user_by_username, get_user_by_id
-from core.redis import blacklist_token
+from consumer.core.models import User
+from consumer.core.db import get_db
+from consumer.core.crud import create_user, get_user_by_username, get_user_by_id
+from consumer.utils.redis import blacklist_token
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -35,7 +35,7 @@ async def process_register(message: Dict[str, Any]):
         await create_user(db, new_user)
     finally:
         db.close()
-    return {"success": "User registerered successfully"}
+    return {"success": "User registered successfully"}
 
 async def process_login(message: Dict[str, Any]) -> Dict[str, Any]:
     db_gen = get_db()

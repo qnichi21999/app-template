@@ -2,10 +2,10 @@ from fastapi import APIRouter, Request, Depends
 from fastapi.security import OAuth2PasswordRequestForm, HTTPAuthorizationCredentials, HTTPBearer
 import logging
 
-from producer.core.rabbitmq import rabbitmq_manager
-from producer.core.security import hash_password, verify_password, create_access_token, create_refresh_token
-from producer.core.exceptions import UnauthorizedError, InternalServerError
-from producer.schemas.user import RegisterModel, TokenResponse
+from ..core.rabbitmq import rabbitmq_manager
+from ..utils.security import hash_password, verify_password, create_access_token, create_refresh_token
+from ..core.exceptions import UnauthorizedError, InternalServerError
+from ..schemas.user import RegisterModel, TokenResponse
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
