@@ -1,9 +1,9 @@
 from fastapi import FastAPI, Depends
 from starlette.middleware.base import BaseHTTPMiddleware
 
-from producer.routers.auth import router as auth_router
 from producer.core.rabbitmq import rabbitmq_manager
 from producer.core.exceptions import ValidationError, UnauthorizedError
+from producer.src.user.routers.auth import router as auth_router
 from producer.utils.security import verify_token
 
 # dev only
