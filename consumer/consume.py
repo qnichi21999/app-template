@@ -3,7 +3,16 @@ import json
 import logging
 import os
 from typing import Dict, Any
-from aio_pika import connect, connect_robust, Message, IncomingMessage, Exchange, ExchangeType
+
+from aio_pika import (
+    connect,
+    connect_robust,
+    Message,
+    IncomingMessage,
+    Exchange,
+    ExchangeType
+)
+
 from consumer.core.models import User
 from consumer.core.db import get_db
 from consumer.core.crud import create_user, get_user_by_username, get_user_by_id
