@@ -22,6 +22,8 @@ services:
     working_dir: /app/consumer
     volumes:
       - .:/app
+    environment:
+      PYTHONPATH: /app
     command: >
       sh -c "pip install alembic sqlalchemy psycopg2-binary &&
              alembic revision --autogenerate -m \"Make migrations\" &&
@@ -54,6 +56,7 @@ services:
       RABBITMQ_HOST: "rabbitmq"
       RABBITMQ_PORT: 5672
       SECRET_KEY: "${SECRET_KEY}"
+      PYTHONPATH: /app
     depends_on:
       rabbitmq:
         condition: service_healthy
@@ -72,6 +75,7 @@ services:
       RABBITMQ_PORT: 5672
       DATABASE_URL: ${DATABASE_URL}
       SECRET_KEY: "${SECRET_KEY}"
+      PYTHONPATH: /app
     depends_on:
       postgres:
         condition: service_started

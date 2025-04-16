@@ -1,7 +1,7 @@
 from fastapi import Request, Depends
 from fastapi.security import OAuth2PasswordBearer
-from producer.core.config import settings
-from producer.core.exceptions import UnauthorizedError, ForbiddenError
+from .config import settings
+from .exceptions import UnauthorizedError, ForbiddenError
 
 # dev only
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl=settings.OAUTH2_TOKEN_URL, scheme_name="OAuth2PasswordBearer") # For Swagger to work

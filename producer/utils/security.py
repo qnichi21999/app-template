@@ -5,7 +5,7 @@ from jose import JWTError, jwt
 import uuid
 from producer.core.config import settings
 from producer.core.exceptions import UnauthorizedError
-from producer.core.redis import is_token_blacklisted
+from producer.utils.redis import is_token_blacklisted
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
